@@ -22,5 +22,5 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_KEY
           EOF
-      - run: heroku git:remote -a $HEROKU_APP_NAME
+      - run: git remote add heroku https://git.heroku.com/akhileshns-js-rest-api.git
       - run: git push heroku HEAD:refs/heads/master
