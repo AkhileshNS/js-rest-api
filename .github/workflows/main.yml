@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1.0.0
-      - uses: akhileshns/heroku-deploy
+      - uses: akhileshns/heroku-deploy@v1
         with:
           heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
