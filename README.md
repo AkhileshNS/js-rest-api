@@ -41,3 +41,69 @@
   ```
 
 - **Step 5**: Finally run `npm start` to launch your REST API
+
+# To Deploy REST API via Heroku
+
+- **Step 1**: Make sure you have the heroku cli installed on your computer with
+
+  - windows - `choco install heroku-cli -y`
+  - macos - `brew tap heroku/brew && brew install heroku`
+  - linux - `sudo snap install heroku --classic`
+
+  [OR] Download and install it from [here](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+
+  Verify everything is installed using `heroku --version`
+
+- **Step 2**: Login using `heroku login`
+
+- **Step 3**: In the your project folder, create a file called Procfile and fill it with the contents:
+
+```procfile
+web: npm start
+```
+
+- **Step 4**: And in your index.js file, make the following changes:-
+
+```javascript
+// IMPORTS
+const express = require('express');
+
+const app = express();
+const port = process.env.PORT || 5000; // ADD THIS
+
+/*ADD THIS*/
+app.get('/', (req, res) => {
+  res.send('go to /hello');
+});
+/**/
+
+app.get('/hello', (req, res) => {
+  res.send('world of nodejs');
+});
+
+app.listen(port, () => console.log('Listening on port ' + port)); // MAKE CHANGE HERE
+```
+
+- **Step 5**: initialize a git repo, commit the changes and push them. Then run `heroku create APPNAME` and `git push heroku master` to deploy app
+
+- **Step 6**: Find your Heroku API Key in settings and add it as a secret in your repository's settings
+
+- **Step 7**: Create a folder /.github/workflows and in it create a file with the following contents:-
+
+```yaml
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
+          HEROKU_APP_NAME: 'your-app-name-here'
+        if: github.ref == 'refs/heads/master' && job.status == 'success'
+        run: git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
+```
