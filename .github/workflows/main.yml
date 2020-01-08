@@ -5,22 +5,12 @@ on:
       - master
 jobs:
   build:
-    env:
-      HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
-      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1.0.0
-      - run: |+
-          cat >~/.netrc <<EOF
-          machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          EOF
-      - run: heroku git:remote -a $HEROKU_APP_NAME
-      - run: git push heroku HEAD:refs/heads/master
+      - uses: akhileshns/heroku-deploy
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}

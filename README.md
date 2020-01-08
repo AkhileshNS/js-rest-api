@@ -58,52 +58,53 @@
 
 - **Step 3**: In the your project folder, create a file called Procfile and fill it with the contents:
 
-```procfile
-web: npm start
-```
+  ```procfile
+  web: npm start
+  ```
 
 - **Step 4**: And in your index.js file, make the following changes:-
 
-```javascript
-// IMPORTS
-const express = require('express');
+  ```javascript
+  // IMPORTS
+  const express = require('express');
 
-const app = express();
-const port = process.env.PORT || 5000; // ADD THIS
+  const app = express();
+  const port = process.env.PORT || 5000; // ADD THIS
 
-/*ADD THIS*/
-app.get('/', (req, res) => {
-  res.send('go to /hello');
-});
-/**/
+  /*ADD THIS*/
+  app.get('/', (req, res) => {
+    res.send('go to /hello');
+  });
+  /**/
 
-app.get('/hello', (req, res) => {
-  res.send('world of nodejs');
-});
+  app.get('/hello', (req, res) => {
+    res.send('world of nodejs');
+  });
 
-app.listen(port, () => console.log('Listening on port ' + port)); // MAKE CHANGE HERE
-```
+  app.listen(port, () => console.log('Listening on port ' + port)); // MAKE CHANGE HERE
+  ```
 
 - **Step 5**: initialize a git repo, commit the changes and push them. Then run `heroku create APPNAME` and `git push heroku master` to deploy app
 
-- **Step 6**: Find your Heroku API Key in settings and add it as a secret in your repository's settings
+- **Step 6**: Find your Heroku API Key, Heroku Email and Heroku App name in settings and add it as a secret in your repository's settings
 
 - **Step 7**: Create a folder /.github/workflows and in it create a file with the following contents:-
 
-```yaml
-name: Deploy
-on:
-  push:
-    branches:
-      - master
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
-          HEROKU_APP_NAME: 'your-app-name-here'
-        if: github.ref == 'refs/heads/master' && job.status == 'success'
-        run: git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
-```
+  ```yaml
+  name: Deploy
+  on:
+    push:
+      branches:
+        - master
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v1.0.0
+        - uses: akhileshns/heroku-deploy
+          with:
+            heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
+            heroku_email: ${{secrets.HEROKU_EMAIL}}
+            heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+  ```
