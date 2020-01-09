@@ -88,3 +88,5 @@
   ```
 
 - **Step 4**: Now we can push this to GitHub but before that, make sure you have created a Heroku account and in account settings, copy the api key. Then in the github repo for this project, go to settings and add secrets HEROKU_API_KEY (Your copied apikey), HEROKU EMAIL (The email associated with your heroku account) and HEROKU_APP_NAME (The name of your app and keep in mind it needs to be unique in heroku)
+
+  Now whenever you push to the master branch of your github repo, your app is automatically deployed to heroku
