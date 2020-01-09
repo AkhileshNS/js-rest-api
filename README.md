@@ -42,6 +42,14 @@
 
 - **Step 5**: Finally run `npm start` to launch your REST API
 
+- **Step 6**: Don't forget to add a _.gitignore_ file and use git to manage your project. The contents of the _.gitignore_ file are:-
+  ```
+  /node_modules
+  npm-debug.log
+  .DS_Store
+  /.env
+  ```
+
 # To Deploy REST API via Heroku
 
 - **Step 1**: Before deploying to Heroku, since Heroku uses its own port, we need to change the code in index.js to:
