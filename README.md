@@ -14,7 +14,7 @@
 
 - **Step 3**: Inside the package.json file, in "scripts", add
 
-  ```json
+  ```
   {
     ...
     "scripts": {
@@ -44,51 +44,29 @@
 
 # To Deploy REST API via Heroku
 
-- **Step 1**: Make sure you have the heroku cli installed on your computer with
-
-  - windows - `choco install heroku-cli -y`
-  - macos - `brew tap heroku/brew && brew install heroku`
-  - linux - `sudo snap install heroku --classic`
-
-  [OR] Download and install it from [here](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
-
-  Verify everything is installed using `heroku --version`
-
-- **Step 2**: Login using `heroku login`
-
-- **Step 3**: In the your project folder, create a file called Procfile and fill it with the contents:
-
-  ```procfile
-  web: npm start
-  ```
-
-- **Step 4**: And in your index.js file, make the following changes:-
+- **Step 1**: Before deploying to Heroku, since Heroku uses its own port, we need to change the code in index.js to:
 
   ```javascript
   // IMPORTS
   const express = require('express');
 
   const app = express();
-  const port = process.env.PORT || 5000; // ADD THIS
-
-  /*ADD THIS*/
-  app.get('/', (req, res) => {
-    res.send('go to /hello');
-  });
-  /**/
+  const port = process.env.PORT || 5000; // Add THIS
 
   app.get('/hello', (req, res) => {
     res.send('world of nodejs');
   });
 
-  app.listen(port, () => console.log('Listening on port ' + port)); // MAKE CHANGE HERE
+  app.listen(port, () => console.log('Listening on port ' + port)); // CHANGE THIS
   ```
 
-- **Step 5**: initialize a git repo, commit the changes and push them. Then run `heroku create APPNAME` and `git push heroku master` to deploy app
+- **Step 2**: Now add a _Procfile_ in your project with the contents:-
 
-- **Step 6**: Find your Heroku API Key, Heroku Email and Heroku App name in settings and add it as a secret in your repository's settings
+  ```Procfile
+  web: npm start
+  ```
 
-- **Step 7**: Create a folder /.github/workflows and in it create a file with the following contents:-
+- **Step 3**: Now create a folder _.github/workflows_ and in there create a file _main.yml_ with contents:
 
   ```yaml
   name: Deploy
@@ -102,9 +80,11 @@
 
       steps:
         - uses: actions/checkout@v1.0.0
-        - uses: akhileshns/heroku-deploy@v1
+        - uses: akhileshns/heroku-deploy@master
           with:
-            heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
+            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
             heroku_email: ${{secrets.HEROKU_EMAIL}}
             heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
   ```
+
+- **Step 4**: Now we can push this to GitHub but before that, make sure you have created a Heroku account and in account settings, copy the api key. Then in the github repo for this project, go to settings and add secrets HEROKU_API_KEY (Your copied apikey), HEROKU EMAIL (The email associated with your heroku account) and HEROKU_APP_NAME (The name of your app and keep in mind it needs to be unique in heroku)
