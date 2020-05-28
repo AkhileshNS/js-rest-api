@@ -1,2 +1,3 @@
 RUN 1 - Failed because of permission to create file being denied
-RUN 2 
+RUN 2 - Failed because cat command doesn't seem to execute well with async exec
+RUN 3
