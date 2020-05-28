@@ -1,1 +1,2 @@
-RUN 1
+RUN 1 - Failed because of permission to create file being denied
+RUN 2 
