@@ -1,3 +1,4 @@
 RUN 1 - Failed because of permission to create file being denied
 RUN 2 - Failed because cat command doesn't seem to execute well with async exec
-RUN 3
+RUN 3 - Failed because async exec isn't treated well by github actions
+RUN 4 - 
