@@ -6,4 +6,5 @@ RUN 5 - Failed because the .netrc file was not written correctly
 RUN 6 - Failed because the .netrc file was not written correctly
 RUN 7 - Failed because the .netrc file was not written correctly
 RUN 8 - Permission error
-RUN 9 
+RUN 9 - Permission error
+RUN 10
