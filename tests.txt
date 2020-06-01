@@ -5,4 +5,5 @@ RUN 4 - Failed because it tried to treat the second param as an arg list
 RUN 5 - Failed because the .netrc file was not written correctly
 RUN 6 - Failed because the .netrc file was not written correctly
 RUN 7 - Failed because the .netrc file was not written correctly
-RUN 8
+RUN 8 - Permission error
+RUN 9 
