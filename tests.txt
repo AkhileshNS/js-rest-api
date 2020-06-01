@@ -4,4 +4,5 @@ RUN 3 - Failed because async exec isn't treated well by github actions
 RUN 4 - Failed because it tried to treat the second param as an arg list
 RUN 5 - Failed because the .netrc file was not written correctly
 RUN 6 - Failed because the .netrc file was not written correctly
-RUN 7
+RUN 7 - Failed because the .netrc file was not written correctly
+RUN 8
