@@ -8,4 +8,5 @@ RUN 7 - Failed because the .netrc file was not written correctly
 RUN 8 - Permission error
 RUN 9 - Permission error
 RUN 10 - Bad Import
-RUN 11
+RUN 11 - Bad Params
+RUN 12
